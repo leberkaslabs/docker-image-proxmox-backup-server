@@ -1,0 +1,17 @@
+---
+services:
+  proxmox-backup-server:
+    build: .
+    platform: linux/amd64
+    container_name: proxmox-backup-server
+    hostname: proxmox-backup-server
+    ports:
+      - 8007:8007
+    environment:
+      PBS_ROOT_PASSWORD: changeme
+    volumes:
+      - ./.docker-compose.d/pbs-etc:/etc/proxmox-backup
+      - ./.docker-compose.d/pbs-lib:/var/lib/proxmox-backup
+      - ./.docker-compose.d/pbs-log:/var/log/proxmox-backup
+    tmpfs:
+      - /run

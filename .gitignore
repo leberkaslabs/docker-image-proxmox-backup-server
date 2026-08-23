@@ -1,0 +1,8 @@
+# Ignore Compose files
+.docker-compose.d
+
+# Ignore MacOS files
+.DS_Store
+
+# Ignore VSCode files
+.vscode

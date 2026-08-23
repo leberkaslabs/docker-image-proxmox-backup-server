@@ -1,0 +1,6 @@
+---
+# Hadolint Rules
+# https://github.com/hadolint/hadolint?tab=readme-ov-file#rules
+ignored:
+  - DL3008
+  - DL3025

@@ -1,0 +1,5 @@
+---
+# https://github.com/apps/settings
+repository:
+  description: Proxmox Backup Server is an enterprise backup solution, for backing up and restoring VMs, containers, and physical hosts.
+  topics: proxmox, tools, container, docker
