@@ -28,9 +28,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -40,9 +37,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build image
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
-          push: true
-          tags: dudecalledbro/proxmox-backup-server:latest
+          load: true
+          tags: dudecalledbro/proxmox-backup-server:build
+
+      - name: Determine Proxmox Backup Server version
+        id: version
+        run: |
+          version=$(docker run --rm dudecalledbro/proxmox-backup-server:build \
+            dpkg-query -f='${Version}' -W proxmox-backup-server | tr ':' '_')
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Tag and push
+        run: |
+          docker tag dudecalledbro/proxmox-backup-server:build \
+            dudecalledbro/proxmox-backup-server:latest
+          docker tag dudecalledbro/proxmox-backup-server:build \
+            dudecalledbro/proxmox-backup-server:${{ steps.version.outputs.version }}
+          docker push dudecalledbro/proxmox-backup-server:latest
+          docker push dudecalledbro/proxmox-backup-server:${{ steps.version.outputs.version }}
