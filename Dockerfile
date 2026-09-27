@@ -1,4 +1,4 @@
-FROM docker.io/library/debian:13.6-slim
+FROM docker.io/library/debian:13.7-slim
 
 LABEL org.opencontainers.image.source="https://github.com/leberkaslabs/docker-image-proxmox-backup-server"
 
